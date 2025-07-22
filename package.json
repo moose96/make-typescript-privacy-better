@@ -1,0 +1,47 @@
+{
+  "name": "make-typescript-privacy-better",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "test:webpack": "webpack --config ./src/webpack/webpack.config.ts",
+    "format": "prettier --write */**/*.ts",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.12.1",
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@types/node": "^24.0.15",
+    "@types/webpack": "^5.28.5",
+    "esbuild": "^0.25.8",
+    "eslint": "^9.31.0",
+    "prettier": "^3.6.2",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.37.0",
+    "vitest": "^3.2.4",
+    "webpack": "^5.100.2",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "@vitest/expect": "^3.2.4",
+    "ts-morph": "^26.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3",
+    "webpack": "^5.100.2"
+  },
+  "peerDependenciesMeta": {
+    "webpack": {
+      "optional": true
+    }
+  },
+  "exports": {
+    "webpack": "./dist/webpack/index.js"
+  }
+}
