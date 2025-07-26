@@ -1,0 +1,27 @@
+on:
+  release:
+    types: [released]
+
+jobs:
+  build:
+    uses: moose96/reusable-workflows/.github/workflows/build.yml@main
+    with:
+      artifacts-path: dist
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup tools
+        uses: moose96/reusable-workflows/.github/actions/setup@main
+      - name: Setup pnpm cmd without workspace
+        run: echo "PNPM_CMD=$PNPM_HOME/pnpm" >> $GITHUB_ENV
+      - name: Download bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: bundle
+      - name: Publish package
+        run: $PNPM_CMD publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

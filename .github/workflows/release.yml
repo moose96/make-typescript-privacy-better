@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-as:
+        description: 'Force version to release'
+        required: false
+        type: string
+      prerelease:
+        description: 'Set release as prerelease; the string provided becomes prerelease tag (e.g. "beta")'
+        required: false
+        type: string
+      release-count:
+        description: 'Number of releases to recreate'
+        required: false
+        type: string
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    uses: moose96/reusable-workflows/.github/workflows/release.yml@main
+    with:
+      release-as: ${{ github.event.inputs.release-as }}
+      prerelease: ${{ github.event.inputs.prerelease }}
+      release-count: ${{ github.event.inputs.release-count }}
+
+    secrets: inherit
