@@ -43,7 +43,7 @@ export class SourceFileTransformer {
 
     const classes = sourceFile.getClasses();
     const firstClassDeclaration = classes.at(0);
-    const firstClassPosition = firstClassDeclaration?.getStart() ?? 0;
+    const firstClassPosition = Math.max((firstClassDeclaration?.getStartLineNumber() ?? 0) - 3, 0);
 
     symbolInjector.insertSymbols(firstClassPosition, this.replacementMap.values());
   }

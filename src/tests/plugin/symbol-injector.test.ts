@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { SymbolInjector } from '../../plugin/symbol-injector';
-import { TypescriptTestUtility } from './typescript-test-utility';
+import { testUtilities } from './utility/test-utilities';
 
 describe('SymbolInjector', () => {
   it('should create a symbol name using special character', () => {
@@ -14,7 +14,7 @@ describe('SymbolInjector', () => {
   });
 
   it('should create many symbol declarations', () => {
-    const sourceFile = TypescriptTestUtility.instance.createEmptyFile();
+    const sourceFile = testUtilities.createFile();
     const symbolInjector = new SymbolInjector(sourceFile);
     symbolInjector.insertSymbols(0, ['symbol1', 'symbol2', 'symbol3']);
 

@@ -1,4 +1,4 @@
 import { expect } from 'vitest';
-import { TypescriptTestUtility } from './src/tests/plugin/typescript-test-utility';
+import { extendsMatchers } from './src/tests/plugin/utility/matchers';
 
-TypescriptTestUtility.create(expect);
+extendsMatchers(expect);

@@ -1,14 +1,7 @@
-export interface IMakeTypescriptPrivacyBetterOptions {
-  enableLogging?: boolean;
-  pattern?: RegExp;
-  useSymbolTemplate?: boolean;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface IMakeTypescriptPrivacyBetterOptions {}
 
 export class MakeTypescriptPrivacyBetterOptions implements IMakeTypescriptPrivacyBetterOptions {
-  enableLogging = true;
-  pattern = /\.ts$/;
-  useSymbolTemplate = true;
-
   constructor(options: Partial<IMakeTypescriptPrivacyBetterOptions> = {}) {
     Object.assign(this, options);
   }

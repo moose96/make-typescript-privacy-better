@@ -7,8 +7,12 @@ import { transformMemberReferences } from './transform-member-references';
 export class ConstructorTransformer {
   public replacementMap = new NestedKeyMap<[string, string], string>();
 
-  transform(classDeclaration: ClassDeclaration, declaration: ConstructorDeclaration): TransformationResult {
+  transform(classDeclaration: ClassDeclaration, declaration?: ConstructorDeclaration): TransformationResult {
     const parentClassName = classDeclaration.getName() ?? 'AnonymousClass';
+
+    if (!declaration) {
+      return TransformationResult.Skipped;
+    }
 
     for (const param of declaration.getParameters()) {
       if (!param.hasModifier(SyntaxKind.PrivateKeyword)) {

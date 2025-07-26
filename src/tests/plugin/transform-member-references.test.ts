@@ -1,18 +1,18 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { transformMemberReferences } from '../../plugin/transform-member-references';
-import { TypescriptTestUtility } from './typescript-test-utility';
 import { MethodDeclaration, PropertyDeclaration } from 'ts-morph';
+import { TestUtilities, testUtilities } from './utility/test-utilities';
 
 describe('TransformMemberReferences', () => {
   describe.each(['newMember', '[newMember]'])('given new name: %s', (newProperty) => {
     let isComputedProperty: boolean;
 
     beforeEach(() => {
-      isComputedProperty = newProperty.startsWith('[') && newProperty.endsWith(']');
+      isComputedProperty = TestUtilities.isComputedProperty(newProperty);
     });
 
     it('should transform property references', () => {
-      const testClass = TypescriptTestUtility.instance.createClass(`
+      const testClass = testUtilities.createClass(`
         class TestClass {
           property: string = '';
   
@@ -23,13 +23,13 @@ describe('TransformMemberReferences', () => {
       `);
 
       transformMemberReferences(testClass.getMember('property') as PropertyDeclaration, newProperty);
-      expect((testClass.getMember('getProperty') as MethodDeclaration).getBodyText()).toEqual(
+      expect(testClass.getMember('getProperty')).itsBodyMatchesTypescriptCode(
         `return this${isComputedProperty ? '' : '.'}${newProperty};`,
       );
     });
 
     it('should transform method references', () => {
-      const testClass = TypescriptTestUtility.instance.createClass(`
+      const testClass = testUtilities.createClass(`
         class TestClass {
           method() {}
   
@@ -40,13 +40,13 @@ describe('TransformMemberReferences', () => {
       `);
 
       transformMemberReferences(testClass.getMember('method') as MethodDeclaration, newProperty);
-      expect((testClass.getMember('callMethod') as MethodDeclaration).getBodyText()).toEqual(
+      expect(testClass.getMember('callMethod')).itsBodyMatchesTypescriptCode(
         `return this${isComputedProperty ? '' : '.'}${newProperty}();`,
       );
     });
 
     it('should transform property references when the property is an object', () => {
-      const testClass = TypescriptTestUtility.instance.createClass(`
+      const testClass = testUtilities.createClass(`
         class TestClass {
           property = {
             nested: 'value',
@@ -59,7 +59,7 @@ describe('TransformMemberReferences', () => {
       `);
 
       transformMemberReferences(testClass.getMember('property') as PropertyDeclaration, newProperty);
-      expect((testClass.getMember('getNestedProperty') as MethodDeclaration).getBodyText()).toEqual(
+      expect(testClass.getMember('getNestedProperty')).itsBodyMatchesTypescriptCode(
         `return this${isComputedProperty ? '' : '.'}${newProperty}.nested;`,
       );
     });
