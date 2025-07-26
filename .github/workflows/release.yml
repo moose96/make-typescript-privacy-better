@@ -20,10 +20,9 @@ jobs:
   release:
     permissions:
       contents: write
-    uses: moose96/reusable-workflows/.github/workflows/release.yml@main
+    uses: moose96/public-reusable-workflows/.github/workflows/release.yml@main
     with:
       release-as: ${{ github.event.inputs.release-as }}
       prerelease: ${{ github.event.inputs.prerelease }}
       release-count: ${{ github.event.inputs.release-count }}
-
     secrets: inherit

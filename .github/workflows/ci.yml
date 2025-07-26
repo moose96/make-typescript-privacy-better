@@ -8,6 +8,6 @@ on:
 
 jobs:
   ci:
-    uses: moose96/reusable-workflows/.github/workflows/ci.yml@main
+    uses: moose96/public-reusable-workflows/.github/workflows/ci.yml@main
     with:
       e2e: false
